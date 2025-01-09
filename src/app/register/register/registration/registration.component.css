@@ -1,0 +1,96 @@
+/* Registration Form Styles */ 
+.registration-container { 
+  max-width: 600px; 
+  margin: 50px auto; 
+  padding: 30px; 
+  background: linear-gradient(to bottom right, Pink, skyblue); 
+  border-radius: 12px; 
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); 
+  color: #120808; 
+} 
+ 
+.registration-title { 
+  text-align: center; 
+  margin-bottom: 30px; 
+  font-size: 32px; 
+  font-weight: bold; 
+  letter-spacing: 1px; 
+  text-transform: uppercase; 
+  color: #120909; 
+} 
+ 
+.form-group { 
+  margin-bottom: 20px; 
+} 
+ 
+.form-label { 
+  font-size: 14px; 
+  font-weight: bold; 
+  letter-spacing: 0.5px; 
+  margin-bottom: 5px; 
+  display: block; 
+  color: #110909; 
+} 
+ 
+.form-control, 
+.form-select { 
+  border-radius: 6px; 
+  border: 1px solid #fff; 
+  background-color: rgba(255, 255, 255, 0.1); 
+  color: #060303; 
+  font-size: 15px; 
+  padding: 10px 12px; 
+  transition: all 0.3s ease; 
+} 
+ 
+.form-control:focus, 
+.form-select:focus { 
+  border-color: #00c4ff; 
+  background-color: rgba(255, 255, 255, 0.2); 
+  box-shadow: 0 0 5px rgba(0, 196, 255, 0.5); 
+  outline: none; 
+} 
+ 
+.text-danger { 
+  font-size: 12px; 
+  color: #ff7675; 
+} 
+ 
+button { 
+  width: 100%; 
+  padding: 12px 15px; 
+  font-size: 16px; 
+  font-weight: bold; 
+  text-transform: uppercase; 
+  color: #007bff; 
+  background-color: #fff; 
+  border: none; 
+  border-radius: 6px; 
+  cursor: pointer; 
+  transition: all 0.3s ease; 
+} 
+ 
+button:hover { 
+  background-color: #00c4ff; 
+  color: #fff; 
+} 
+ 
+button:focus { 
+  outline: none; 
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); 
+} 
+ 
+/* Responsive Styles */ 
+@media (max-width: 768px) { 
+  .registration-container { 
+    padding: 20px; 
+  } 
+ 
+  .registration-title { 
+    font-size: 28px; 
+  } 
+ 
+  button { 
+    font-size: 14px; 
+  } 
+}

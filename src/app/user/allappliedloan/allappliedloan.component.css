@@ -1,0 +1,106 @@
+/* General container */
+.applied-loans-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Search Bar */
+.form-control {
+  max-width: 500px;
+}
+
+/* Container for cards */
+.loans-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Individual loan card */
+.loan-card {
+  background-color: #fff;
+  border: 1px solid #d33bce;
+  border-radius: 8px;
+  box-shadow: 0 5px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.loan-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Card header */
+.loan-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.loan-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.loan-status {
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  color: green;
+}
+
+.loan-status.approved {
+  background-color: #28a745;
+  color: white;
+}
+
+.loan-status.pending {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Card body */
+.loan-card-body {
+  padding: 15px 0;
+}
+
+.loan-details p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.loan-details strong {
+  font-weight: bold;
+}
+
+/* Pagination */
+.pagination-controls {
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page-size-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.page-info {
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+/* Alert for no loans */
+.alert-warning {
+  margin-top: 20px;
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+}
