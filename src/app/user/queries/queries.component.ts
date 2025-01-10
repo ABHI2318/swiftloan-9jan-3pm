@@ -13,97 +13,72 @@ import * as bootstrap from 'bootstrap';
 })
 export class QueriesComponent implements OnInit {
 
-  @Output() loanSubmitted = new EventEmitter<void>();
-  uploadForm!: FormGroup;
-  userId: any;
-  query: any;
+  uploadForm: FormGroup;
+  queries: any[] = [];
+  currentPage: number = 1;
+  totalPages: number = 1;
+  pageSize: number = 5;
 
-  constructor(
-    private fb: FormBuilder, 
-    private enquiryService: QueryService,
-    private route: ActivatedRoute // Inject ActivatedRoute to access query parameters
-  ) {
+  constructor(private fb: FormBuilder, private queryService: QueryService) {
     this.uploadForm = this.fb.group({
-      question: ['', Validators.required],  // Adding the 'question' control
-      querytype: ['', Validators.required],  // Adding the 'querytype' control
+      question: ['', [Validators.required]],
+      querytype: ['', [Validators.required]],
     });
   }
 
   ngOnInit(): void {
-    // Get the query parameter `userId` from the URL
-    // this.route.queryParams.subscribe(params => {
-    //   this.userId = params['userId'];
-    //   if (!this.userId) {
-    //     console.error('user ID is missing.');
-    //   }
-    // });
+    this.fetchQueries();
   }
-  
 
+  // Submit a new query
   onSubmit(): void {
-    if (this.uploadForm.valid ) {
-      const formData = new FormData();
-      formData.append('question', this.uploadForm.value.question);
-      formData.append('querytype', this.uploadForm.value.querytype);
+    if (this.uploadForm.valid) {
+      const queryData = this.uploadForm.value;
   
-      // Call the service to submit the query with the userId
-      this.enquiryService.submitQuery(this.uploadForm.value).subscribe(
-        (response) => {
-          console.log('Query submitted successfully:', response);
-          alert('Your query has been submitted successfully.');
-          this.uploadForm.reset(); // Optionally reset the form after submission
+      this.queryService.submitQueryapplication(queryData).subscribe({
+        next: () => {
+          this.uploadForm.reset(); // Reset form
+          this.fetchQueries(); // Fetch updated queries
+          alert('Query submitted successfully!'); // Show success alert
         },
-        (error) => {
-          console.error('Error submitting query:', error);
-          alert('Failed to submit query. Please try again.');
-        }
-      );
-    } else {
-      alert('Please fill in all required fields.');
+        error: (err) => {
+          console.error('Error submitting query:', err);
+          alert('Failed to submit query. Please try again.'); // Show error alert
+        },
+      });
     }
   }
-}  
+  
 
-// queryRequest = {
-//   question: '',
-//   querytype: '',
- 
-// };
+  // Fetch submitted queries from backend
+  fetchQueries(): void {
+    this.queryService.getAllQueries(this.currentPage - 1, this.pageSize).subscribe({
+      next: (response) => {
+        this.queries = response.contents; // Backend response structure
+        this.totalPages = response.totalPages;
+        console.log(this.queries);
+      },
+      error: (err) => {
+        console.error('Error fetching queries:', err);
+        alert('Failed to fetch queries. Please try again later.');
+      },
+    });
+  }
+  
 
-// submittedQueries: any[] = [];
+  // Pagination: go to previous page
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.fetchQueries();
+    }
+  }
 
-
-// constructor(private queryService: QueryService) {}
-
-// ngOnInit(): void {}
-
-// submitQuery(): void {
-//   this.queryService.submitQuery(this.queryRequest).subscribe(
-//     (response) => {
-//       alert('Query submitted successfully');
-//       this.queryRequest = { question: '', querytype: '' };
-//     },
-//     (error) => {
-//       console.error('Error submitting query', error);
-//       alert('Failed to submit query');
-//     }
-//   );
-// }
-
-// getSubmittedQueries(): void {
-//   this.queryService.getSubmittedQueries().subscribe(
-//     (response) => {
-//       this.submittedQueries = response;
-//       // Use Bootstrap's Modal class to show the modal
-//       const modalElement = document.getElementById('queryModal');
-//       if (modalElement) {
-//         const modalInstance = new bootstrap.Modal(modalElement);
-//         modalInstance.show();
-//       }
-//     },
-//     (error) => {
-//       console.error('Error fetching queries', error);
-//     }
-//   );
-// }
-// }
+  // Pagination: go to next page
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.fetchQueries();
+    }
+  }
+}

@@ -7,7 +7,9 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class QueryService {
+ 
   private baseUrl = 'http://localhost:8080/loanapp/submitQuery'; // URL of your backend
+  private getQuery='http://localhost:8080/loanapp/allqueries';
   
   constructor(private http: HttpClient) {}
 
@@ -22,7 +24,10 @@ export class QueryService {
       );
   }
 
-  // Method to submit the query using FormData and userId as query parameter
+  getSubmittedQueries(): Observable<any[]> {
+    return this.http.get<any[]>(this.getQuery);
+  }
+  
   submitQuery(data: FormData): Observable<any> {
   
     
@@ -34,18 +39,18 @@ export class QueryService {
         })
       );
   }
+
+
+  private apiUrl = "http://localhost:8080/loanapp";
+
+
+  getAllQueries(pageNumber: number, pageSize: number): Observable<any> {
+    const params = new HttpParams()
+      .set('pageNumber', pageNumber)
+      .set('pageSize', pageSize);
+
+    return this.http.get<any>(`${this.apiUrl}/allqueries`, { params });
+  }
 }
-// }
-// private submitQueryUrl = 'http://localhost:8080/loanapp/submitQuery'; // Update with your backend endpoint
-// private getQueriesUrl =  'http://localhost:8080/loanapp/allqueries'; // Update with your backend endpoint
 
-// constructor(private http: HttpClient) {}
 
-// submitQuery(queryRequest: any): Observable<any> {
-//   return this.http.post<any>(this.submitQueryUrl, queryRequest);
-// }
-
-// getSubmittedQueries(): Observable<any[]> {
-//   return this.http.get<any[]>(this.getQueriesUrl);
-// }
-// }

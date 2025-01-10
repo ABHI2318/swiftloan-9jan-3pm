@@ -12,6 +12,10 @@ export class LoanOfficerService {
 
   private deleteLoanOfficerUrl ="http://localhost:8080/loanapp/deletelaonofficer";
 
+  private fetchLoanOfficerUrl ="http://localhost:8080/loanapp/fetchloanofficer";
+
+  private UpadateLoanOfficerUrl = "http://localhost:8080/loanapp/updateloanofficer";
+
   getAllLoanOfficer(page: number, pageSize: number): Observable<any> {
     const params = new HttpParams()
       .set('page', page.toString())        // Changed from 'pageNumber' to 'page'
@@ -28,7 +32,15 @@ export class LoanOfficerService {
   AddLoanOfficers(value:any){
     return this.http.post<any>(this.LoanOfficerUrl, value);
   }
+  
+  fetchloanOfficer(){
+    return this.http.get<any>(`${this.fetchLoanOfficerUrl}`);
+  }
 
+  updateLoanOfficer(value:any){
+    console.log(value);
+    return this.http.post<any>(this.UpadateLoanOfficerUrl, value);
+  }
 
   //loanofficer
   private GetAllLoanRequestUrl = 'http://localhost:8080/loanapp';
@@ -50,4 +62,18 @@ export class LoanOfficerService {
       headers: { 'Content-Type': 'application/json' }, // Explicitly set JSON content type
     });
   }
+
+
+
+  private fetchUserUrl ="http://localhost:8080/loanapp/fetchuser";
+
+  private UpdateUserUrl = "http://localhost:8080/loanapp/updateuser";
+  updateUser(value:any){
+    console.log(value);
+    return this.http.post<any>(this.UpdateUserUrl, value);
+  }
+  fetchUser(){
+    return this.http.get<any>(`${this.fetchUserUrl}`);
+  }
+
 }
